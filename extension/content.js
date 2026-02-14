@@ -200,35 +200,29 @@ function handleToggleClick(btn) {
 
 // Calculate optimization metrics
 function calculateOptimization(prompt) {
-  const originalTokens = estimateTokens(prompt);
-  
   // Simulate optimization (in real scenario, this would call an API)
   const optimizedPrompt = optimizePromptText(prompt);
-  const optimizedTokens = estimateTokens(optimizedPrompt);
   
-  const reduction = originalTokens - optimizedTokens;
-  const reductionPercentage = Math.round((reduction / originalTokens) * 100);
+  // Use the impact calculation library from teammate
+  const impactData = window.GreenPromptImpact.calculateImpactSummary(prompt, optimizedPrompt, 1);
   
   const beforeClarity = calculateClarity(prompt);
   const afterClarity = calculateClarity(optimizedPrompt);
   const clarityImprovement = afterClarity - beforeClarity;
   
-  const energySaved = (reduction * 0.0000024).toFixed(4); // Rough estimate: 0.0000024 Wh per token
-  const tokensAt10k = reduction * 10000;
-  const millionTokens = (tokensAt10k / 1000000).toFixed(1);
-  
   return {
     originalPrompt: prompt,
     optimizedPrompt: optimizedPrompt,
-    originalTokens: originalTokens,
-    optimizedTokens: optimizedTokens,
-    reduction: reduction,
-    reductionPercentage: reductionPercentage,
+    originalTokens: impactData.originalTokens,
+    optimizedTokens: impactData.optimizedTokens,
+    reduction: impactData.tokensSaved,
+    reductionPercentage: impactData.reductionPct,
     beforeClarity: beforeClarity,
     afterClarity: afterClarity,
     clarityImprovement: clarityImprovement,
-    energySaved: energySaved,
-    millionTokens: millionTokens
+    energySaved: impactData.energySavedWh.toFixed(4),
+    costSaved: impactData.costSavedUsd.toFixed(6),
+    millionTokens: (impactData.tokensSaved * 10000 / 1000000).toFixed(1)
   };
 }
 
