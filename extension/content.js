@@ -160,6 +160,26 @@ function handleToggleClick(btn) {
     optimizationData = calculateOptimization(promptText);
     optimizedPrompt = optimizationData.optimizedPrompt;
 
+    // Log metrics to console
+    console.log('🌱 GreenPrompt Optimization Metrics:', {
+      original: {
+        text: originalPrompt,
+        tokens: optimizationData.originalTokens,
+        clarity: optimizationData.beforeClarity
+      },
+      optimized: {
+        text: optimizedPrompt,
+        tokens: optimizationData.optimizedTokens,
+        clarity: optimizationData.afterClarity
+      },
+      savings: {
+        tokens: optimizationData.reduction,
+        percentage: optimizationData.reductionPercentage + '%',
+        energy: optimizationData.energySaved + ' Wh',
+        cost: '$' + optimizationData.costSaved
+      }
+    });
+
     // Apply optimization
     inputElement.textContent = optimizedPrompt;
     isOptimized = true;
@@ -173,26 +193,6 @@ function handleToggleClick(btn) {
 
     // Save optimization stats
     saveOptimization(optimizationData);
-
-    // Send JSON to API
-    const payload = {
-      original_prompt: originalPrompt,
-      optimized_prompt: optimizedPrompt,
-      metrics: {
-        original_tokens: optimizationData.originalTokens,
-        optimized_tokens: optimizationData.optimizedTokens,
-        tokens_saved: optimizationData.reduction,
-        clarity_score: optimizationData.afterClarity,
-        energy_saved: optimizationData.energySaved
-      }
-    };
-
-    // Send to your backend (update the URL as needed)
-    fetch('http://localhost:5000/api/optimize', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    }).catch(err => console.log('GreenPrompt: API call sent', err));
 
     showToast(`✨ Optimized! Saved ${optimizationData.reduction} tokens`);
   }
@@ -308,8 +308,12 @@ function saveOptimization(data) {
     chrome.storage.local.set({ optimizations }, () => {
       console.log('GreenPrompt: Optimization saved');
       
-      // Notify popup to refresh
-      chrome.runtime.sendMessage({ type: 'STATS_UPDATED' });
+      // Notify popup to refresh (ignore errors if popup not open)
+      chrome.runtime.sendMessage({ type: 'STATS_UPDATED' }, () => {
+        if (chrome.runtime.lastError) {
+          // Popup not open, ignore error
+        }
+      });
     });
   });
 }
