@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GreenPrompt Dashboard</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Header -->
+    <div class="header">
+      <h1>🌱 GreenPrompt</h1>
+      <p class="subtitle">Your Sustainability Dashboard</p>
+    </div>
+
+    <!-- Stats Overview -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">💾</div>
+        <div class="stat-value" id="total-tokens-saved">0</div>
+        <div class="stat-label">Tokens Saved</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-value" id="total-energy-saved">0</div>
+        <div class="stat-label">Energy Saved (Wh)</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">📝</div>
+        <div class="stat-value" id="total-optimizations">0</div>
+        <div class="stat-label">Optimizations</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-value" id="avg-clarity">0</div>
+        <div class="stat-label">Avg Clarity ↑</div>
+      </div>
+    </div>
+
+    <!-- Time Period Selector -->
+    <div class="period-selector">
+      <button class="period-btn active" data-period="today">Today</button>
+      <button class="period-btn" data-period="week">This Week</button>
+      <button class="period-btn" data-period="month">This Month</button>
+      <button class="period-btn" data-period="year">This Year</button>
+      <button class="period-btn" data-period="all">All Time</button>
+    </div>
+
+    <!-- Impact Statement -->
+    <div class="impact-section">
+      <h2>🌍 Your Impact</h2>
+      <div class="impact-text" id="impact-message">
+        Start optimizing prompts to see your sustainability impact!
+      </div>
+    </div>
+
+    <!-- Badges Section -->
+    <div class="badges-section">
+      <h2>🏆 Badges Earned</h2>
+      <div class="badges-grid" id="badges-container">
+        <!-- Badges will be inserted here -->
+      </div>
+      <div class="no-badges" id="no-badges" style="display: none;">
+        <p>No badges yet. Keep optimizing to earn your first badge! 🎉</p>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="activity-section">
+      <h2>📊 Recent Activity</h2>
+      <div class="activity-list" id="activity-list">
+        <!-- Activity items will be inserted here -->
+      </div>
+      <div class="no-activity" id="no-activity">
+        <p>No activity yet. Click the 🌱 button on Gemini to start!</p>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <button class="btn-secondary" id="reset-stats">Reset Stats</button>
+      <button class="btn-primary" id="export-data">Export Data</button>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

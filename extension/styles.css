@@ -1,0 +1,29 @@
+/* GreenPrompt Styles */
+
+/* Button near input (only for reference - mainly done with inline styles) */
+#greenprompt-icon-btn {
+  z-index: 9999;
+  position: absolute;
+}
+
+/* Popup styling (most done inline, but keeping some CSS for completeness) */
+#greenprompt-popup {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#greenprompt-popup::-webkit-scrollbar {
+  width: 6px;
+}
+
+#greenprompt-popup::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#greenprompt-popup::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 3px;
+}
+
+#greenprompt-popup::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
