@@ -1,0 +1,16 @@
+{
+    "manifest_version": 3,
+    "name": "Prompt Optimizer - Gemma 3",
+    "version": "1.0",
+    "description": "Optimize prompts with Google Gemma 3 AI",
+    
+    "permissions": ["storage"],
+    
+    "background": {
+      "service_worker": "background.js"
+    },
+    
+    "action": {
+      "default_title": "Prompt Optimizer"
+    }
+  }
