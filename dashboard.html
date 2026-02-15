@@ -9,14 +9,46 @@
 </head>
 <body>
   <div class="header">
-    <!-- <h1>🌿 GreenPrompt</h1> -->
     <h1>&#127793; GreenPrompt</h1>
-    
     <p>Your AI Sustainability Companion</p>
   </div>
 
-  <div class="stats">
+  <!-- 🏆 SUSTAINABILITY RANK SECTION -->
+  <div class="rank-section">
+    <div class="rank-card">
+      <div class="rank-title">SUSTAINABILITY RANK</div>
+      <h2 id="rankName">Seedling 🌱</h2>
+      <p id="rankLevel">Level 1</p>
 
+      <div class="progress-bar">
+        <div id="progressFill" class="progress-fill"></div>
+      </div>
+
+      <p id="nextLevelText">Next level in 0 tokens</p>
+    </div>
+  </div>
+
+  <!-- 🌍 REAL WORLD IMPACT -->
+    <div class="impact-equivalents">
+    <div class="impact-card">
+        <h3 id="impact1Value">0</h3>
+        <p id="impact1Label">Impact Metric 1</p>
+    </div>
+
+    <div class="impact-card">
+        <h3 id="impact2Value">0</h3>
+        <p id="impact2Label">Impact Metric 2</p>
+    </div>
+
+    <div class="impact-card">
+        <h3 id="impact3Value">0</h3>
+        <p id="impact3Label">Impact Metric 3</p>
+    </div>
+    </div>
+
+
+  <!-- EXISTING STATS -->
+  <div class="stats">
     <div class="card">
       <h2 id="tokensSaved">0</h2>
       <p>Tokens Saved</p>
@@ -31,32 +63,28 @@
       <h2 id="costSaved">$0</h2>
       <p>Cost Saved</p>
     </div>
-
   </div>
 
-  <div class="equivalent">
-    <p id="equivalentText"></p>
-  </div>
+  <!-- Charts -->
+  <div class="charts-section">
+    <h2>Monthly Impact Overview</h2>
 
-    <div class="charts-section">
-        <h2>Monthly Impact Overview</h2>
-
-        <div class="chart-container">
-            <canvas id="tokensChart"></canvas>
-        </div>
-
-        <div class="chart-container">
-            <canvas id="energyChart"></canvas>
-        </div>
-
-        <div class="chart-container">
-            <canvas id="costChart"></canvas>
-        </div>
+    <div class="chart-container">
+      <canvas id="tokensChart"></canvas>
     </div>
 
+    <div class="chart-container">
+      <canvas id="energyChart"></canvas>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="costChart"></canvas>
+    </div>
+  </div>
 
   <button id="resetBtn">Reset Data</button>
 
   <script src="dashboard.js"></script>
 </body>
+
 </html>

@@ -1,23 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-//   chrome.storage.local.get(
-//     ["totalTokens", "totalEnergy", "totalCost"],
-//     (data) => {
-
-//       const tokens = data.totalTokens || 0;
-//       const energy = data.totalEnergy || 0;
-//       const cost = data.totalCost || 0;
-
-//       document.getElementById("totalTokens").innerText =
-//         tokens.toLocaleString();
-
-//       document.getElementById("totalEnergy").innerText =
-//         energy.toFixed(4);
-
-//       document.getElementById("totalCost").innerText =
-//         "$" + cost.toFixed(6);
-//     }
-//   );
-
     chrome.storage.local.get(
     ["totalTokens", "totalEnergy", "totalCost"],
     (data) => {
@@ -26,11 +7,148 @@ document.addEventListener("DOMContentLoaded", () => {
         const totalEnergy = data.totalEnergy || 0;
         const totalCost = data.totalCost || 0;
 
-        document.getElementById("tokensSaved").innerText = totalTokens;
+        function getImpactMetrics(totalTokens, totalEnergyWh) {
+
+            // Determine Level
+            let level = 1;
+            if (totalTokens >= 10000) level = 5;
+            else if (totalTokens >= 5000) level = 4;
+            else if (totalTokens >= 1500) level = 3;
+            else if (totalTokens >= 500) level = 2;
+
+            // Shared calculations
+            const responsesAvoided = totalTokens / 150;
+            const pagesOptimized = totalTokens / 500;
+            const ledSeconds = totalEnergyWh * 400;
+            const ledHours = totalEnergyWh / 9;
+            const laptopMinutes = totalEnergyWh;
+            const phoneCharges = totalEnergyWh / 12;
+            const laptopHours = totalEnergyWh / 60;
+            const milesEquivalent = totalEnergyWh / 300;
+            const co2SavedKg = (totalEnergyWh / 1000) * 0.4;
+            const treeEquivalent = co2SavedKg / 21;
+            const lightingDays = totalEnergyWh / 180;
+
+            switch(level) {
+
+                case 1:
+                    return [
+                        { label: "Seconds of LED Lighting", value: Math.round(ledSeconds) },
+                        { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) },
+                        { label: "Pages Optimized", value: pagesOptimized.toFixed(1) }
+                    ];
+
+                case 2:
+                    return [
+                        { label: "LED Hours Powered", value: ledHours.toFixed(2) },
+                        { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) },
+                        { label: "Laptop Minutes Powered", value: laptopMinutes.toFixed(1) }
+                    ];
+
+                case 3:
+                    return [
+                        { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
+                        { label: "LED Hours Powered", value: ledHours.toFixed(2) },
+                        { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) }
+                    ];
+
+                case 4:
+                    return [
+                        { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
+                        { label: "Laptop Hours Powered", value: laptopHours.toFixed(2) },
+                        { label: "EV Miles Equivalent", value: milesEquivalent.toFixed(2) }
+                    ];
+
+                case 5:
+                    return [
+                        { label: "Tree Equivalent (Annual)", value: treeEquivalent.toFixed(3) },
+                        { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
+                        { label: "Household Lighting Days", value: lightingDays.toFixed(2) }
+                    ];
+            }
+        }
+
+
+        // Basic stats
+        document.getElementById("tokensSaved").innerText = totalTokens.toLocaleString();
         document.getElementById("energySaved").innerText = totalEnergy.toFixed(4);
         document.getElementById("costSaved").innerText = totalCost.toFixed(6);
 
-        // Generate realistic monthly data
+        /* =============================
+        🏆 LEVEL SYSTEM
+        ============================== */
+
+        const levels = [
+            { name: "Seedling &#127793;", threshold: 0 },
+            { name: "Sapling &#127807;", threshold: 500 },
+            { name: "Eco Guardian &#127795;", threshold: 1500 },
+            { name: "Forest Protector &#127794;", threshold: 5000 },
+            { name: "Climate Champion &#127758;", threshold: 10000 }
+        ];
+
+        const metrics = getImpactMetrics(totalTokens, totalEnergy);
+
+        document.getElementById("impact1Value").innerText = metrics[0].value;
+        document.getElementById("impact1Label").innerText = metrics[0].label;
+
+        document.getElementById("impact2Value").innerText = metrics[1].value;
+        document.getElementById("impact2Label").innerText = metrics[1].label;
+
+        document.getElementById("impact3Value").innerText = metrics[2].value;
+        document.getElementById("impact3Label").innerText = metrics[2].label;
+
+
+        let currentLevelIndex = 0;
+
+        for (let i = 0; i < levels.length; i++) {
+            if (totalTokens >= levels[i].threshold) {
+                currentLevelIndex = i;
+            }
+        }
+
+        const currentLevel = levels[currentLevelIndex];
+        const nextLevel = levels[currentLevelIndex + 1];
+
+        document.getElementById("rankName").innerHTML = currentLevel.name;
+        document.getElementById("rankLevel").innerText = `Level ${currentLevelIndex + 1}`;
+
+        if (nextLevel) {
+            const tokensToNext = nextLevel.threshold - totalTokens;
+            const progress = (totalTokens - currentLevel.threshold) /
+                            (nextLevel.threshold - currentLevel.threshold);
+
+            document.getElementById("nextLevelText").innerText =
+                `Next level in ${tokensToNext.toLocaleString()} tokens`;
+
+            document.getElementById("progressFill").style.width =
+                Math.min(progress * 100, 100) + "%";
+        } else {
+            document.getElementById("nextLevelText").innerText =
+                "Maximum level reached 🚀";
+            document.getElementById("progressFill").style.width = "100%";
+        }
+
+        /* =============================
+        🌍 REAL WORLD IMPACT
+        ============================== */
+
+        const phoneCharges = totalEnergy / 12; // 12Wh avg battery
+        const co2Offset = (totalEnergy / 1000) * 0.4; // kg CO2 per kWh
+        const bulbHours = totalEnergy / 10; // 10W LED bulb
+
+        document.getElementById("phoneCharges").innerText =
+            phoneCharges.toFixed(1);
+
+        document.getElementById("co2Offset").innerText =
+            co2Offset.toFixed(3);
+
+        document.getElementById("bulbHours").innerText =
+            bulbHours.toFixed(1);
+
+        /* =============================
+        Charts
+        ============================== */
+
         const monthly = generateMonthlyData(totalTokens);
 
         createAreaChart("tokensChart", "Tokens Saved", monthly.tokens, "#22c55e");
@@ -38,6 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
         createAreaChart("costChart", "Cost Saved ($)", monthly.cost, "#4ade80");
     }
     );
+
 
     function generateMonthlyData(totalTokens) {
     const months = 6;
