@@ -4,7 +4,10 @@ document.addEventListener("DOMContentLoaded", () => {
     (data) => {
 
         const totalTokens = data.totalTokens || 0;
-        const totalEnergy = data.totalEnergy || 0;
+        // const totalEnergy = data.totalEnergy || 0;
+        // Derive energy dynamically from tokens
+        const totalEnergy = (totalTokens / 1000) * 0.1;
+
         const totalCost = data.totalCost || 0;
 
         function getImpactMetrics(totalTokens, totalEnergyWh) {
