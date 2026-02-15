@@ -1,0 +1,91 @@
+body {
+  margin: 0;
+  background: #0f1117;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 30px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.header p {
+  opacity: 0.6;
+  margin-top: 5px;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: #1c1f26;
+  padding: 25px;
+  border-radius: 16px;
+  width: 180px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  transition: transform 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+.card h2 {
+  margin: 0;
+  color: #2ecc71;
+  font-size: 28px;
+}
+
+.card p {
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+.equivalent {
+  text-align: center;
+  opacity: 0.8;
+  margin-bottom: 30px;
+}
+
+button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #2ecc71;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.charts-section {
+  margin-top: 60px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.chart-container {
+  background: #111827;
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+}
+
+canvas {
+  width: 100% !important;
+  height: 300px !important;
+}
