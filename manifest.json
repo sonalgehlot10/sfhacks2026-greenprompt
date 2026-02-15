@@ -1,17 +1,27 @@
 {
-  "manifest_version": 3,
-  "name": "GreenPrompt",
-  "version": "1.0",
-  "description": "Gemini Prompt Sustainability Optimizer",
-  "permissions": ["activeTab", "scripting"],
-  "host_permissions": ["https://gemini.google.com/*"],
-  "background": {
-    "service_worker": "background.js"
-  },
-  "content_scripts": [
+    "manifest_version": 3,
+    "name": "GreenPrompt",
+    "version": "1.0",
+    "description": "Gemini Prompt Sustainability Optimizer",
+    "permissions": ["activeTab", "scripting", "storage"],
+    "host_permissions": ["https://gemini.google.com/*"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
     {
-      "matches": ["https://gemini.google.com/*"],
-      "js": ["impact/impact.js", "content.js"]
+        "matches": ["https://gemini.google.com/*"],
+        "js": ["impact/impact.js", "content.js"]
     }
-  ]
+    ],
+    "action": {
+        "default_popup": "dashboard.html"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["dashboard.html"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+
 }
