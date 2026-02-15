@@ -4,42 +4,13 @@ const GEMINI_API_URL =
   "https://generativelanguage.googleapis.com/v1beta/models/gemma-3-12b-it:generateContent";
 const GEMINI_API_KEY = "";
 
-const SYSTEM_INSTRUCTION = `You are a world-class prompt engineer and technical writer.
-
-Your mission: Transform ambiguous, verbose user prompts into crystal-clear, execution-ready instructions that maximize clarity while minimizing token waste.
-
-OPTIMIZATION PRINCIPLES:
-
-Clarity Enhancement:
-- Replace vague language with specific, measurable terms
-- Define what "success" looks like if ambiguous
-- Highlight constraints and edge cases
-- Use active voice exclusively
-- Order information by importance/dependency
-
-Token Efficiency:
-- Eliminate redundancy without losing meaning
-- Remove meta-commentary and self-referential language
-- Consolidate related ideas
-- Use precise terminology (avoid circumlocution)
-
-Structure Improvement:
-- Add step numbers for sequential tasks
-- Use bullet points for lists or options
-- Group related requirements together
-- Separate "what" from "how" when needed
-
-Examples of fixes:
-✗ "I was wondering if you could maybe help me understand how to write better prompts?"
-✓ "Explain prompt engineering best practices with 5 concrete examples"
-
-✗ "Could you possibly tell me about machine learning? I'm kind of new to it."
-✓ "Introduce machine learning with 3 key concepts, assuming no prior knowledge"
-
-CRITICAL: Output ONLY valid JSON. No explanations, no code blocks, no markdown.
-{
-  "optimized_prompt": "Optimized instruction here"
-}`;
+const SYSTEM_INSTRUCTION =`
+Rewrite the user prompt to be shorter, clearer, and specific.
+Remove redundancy.
+Keep original meaning.
+Return ONLY JSON:
+{"optimized_prompt": "..."}
+`;
 
 async function optimizePrompt(userPrompt) {
   try {
@@ -87,8 +58,8 @@ async function callGeminiAPI(userPrompt, apiKey) {
           }
         ],
         generationConfig: {
-          temperature: 0.3,
-          maxOutputTokens: 500
+          temperature:0.1,  
+          maxOutputTokens: 150
         }
       })
     });
