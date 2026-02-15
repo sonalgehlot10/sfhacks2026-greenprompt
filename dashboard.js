@@ -46,24 +46,39 @@ document.addEventListener("DOMContentLoaded", () => {
                     ];
 
                 case 3:
+                    // return [
+                    //     { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
+                    //     { label: "LED Hours Powered", value: ledHours.toFixed(2) },
+                    //     { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) }
+                    // ];
                     return [
-                        { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
                         { label: "LED Hours Powered", value: ledHours.toFixed(2) },
-                        { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) }
+                        { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) },
+                        { label: "Laptop Minutes Powered", value: laptopMinutes.toFixed(1) }
                     ];
 
                 case 4:
+                    // return [
+                    //     { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
+                    //     { label: "Laptop Hours Powered", value: laptopHours.toFixed(2) },
+                    //     { label: "EV Miles Equivalent", value: milesEquivalent.toFixed(2) }
+                    // ];
                     return [
-                        { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
-                        { label: "Laptop Hours Powered", value: laptopHours.toFixed(2) },
-                        { label: "EV Miles Equivalent", value: milesEquivalent.toFixed(2) }
+                        { label: "LED Hours Powered", value: ledHours.toFixed(2) },
+                        { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) },
+                        { label: "Laptop Minutes Powered", value: laptopMinutes.toFixed(1) }
                     ];
 
                 case 5:
+                    // return [
+                    //     { label: "Tree Equivalent (Annual)", value: treeEquivalent.toFixed(3) },
+                    //     { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
+                    //     { label: "Household Lighting Days", value: lightingDays.toFixed(2) }
+                    // ];
                     return [
-                        { label: "Tree Equivalent (Annual)", value: treeEquivalent.toFixed(3) },
-                        { label: "Phone Charges Powered", value: phoneCharges.toFixed(2) },
-                        { label: "Household Lighting Days", value: lightingDays.toFixed(2) }
+                        { label: "LED Hours Powered", value: ledHours.toFixed(2) },
+                        { label: "AI Responses Avoided", value: responsesAvoided.toFixed(1) },
+                        { label: "Laptop Minutes Powered", value: laptopMinutes.toFixed(1) }
                     ];
             }
         }
