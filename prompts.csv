@@ -1,0 +1,65 @@
+Prompt
+"San Francisco is known for its innovation, technological breakthroughs, and social activism. This year, SFHacks 2026 is determined to channel technology to help restore and sustain the environments we live in. this is a hackathon for all cs people mainly could you give me a sense of what direction they expect us to go in or what kind of projects they are expecting because it is kind of unclear"
+This one can be when the question is directed towards what challenges you faced or disagreements right? I was thinking first working on a basic story for each project/work experience then updating them based on questions
+"my teammate left the course so course producer added me to a new team how to ask if he can add me to team 2 instead, like is it possible"
+the game still lacks the twist as it needs to be very apparant mechanical twist like somthing happens in the environment or to the player when they collect a wrong letter
+"This is what we where thinking ""Platformer game in which player needs to collect letters to spell out the word which will be seen throughout the environment. And the twist is that player gets 3 stricks so if they collect a letter that is not in the goal word they get one strike"" is in my knowledge bound to build this? also is the twist enough or is it fealing like a part of the game only "
+We reconsidered the magnitude of the sustainability difference we will make so we thought instead of code optimization can we direct towards prompt optimization suggestions 
+"Query optimization is critical in relational databases. Recently, nu-
+merous Learned Query Optimizers (LQOs) have been proposed,
+demonstrating superior performance over traditional hand-crafted
+query optimizers after short training periods. However, the opacity
+and instability of machine learning models have limited their prac-
+tical applications. To address this issue, we are the first to formulate
+the LQO verification as a Conformal Prediction (CP) problem. We
+first construct CP model and obtain user-controlled bounded ranges
+for the actual latency of LQO plans before execution. Then, we intro-
+duce CP-based runtime verification along with violation handling
+to ensure performance prior to execution. For both scenarios, we
+further extend our framework to handle distribution shifts in the
+dynamic environment using adaptive CP approaches. Finally, we
+present CP-guided plan search, which uses actual latency upper
+bounds from CP to heuristically guide query plan construction.
+We integrate our verification framework into three LQOs (Balsa,
+Lero, and RTOS) and conducted evaluations on the JOB and TPC-H
+workloads. Experimental results demonstrate that our method is
+both accurate and efficient. Our CP-based approaches achieve tight
+upper bounds, reliably detect and handle violations. Adaptive 𝐶𝑃
+maintains accurate confidence levels even in the presence of distri-
+bution shifts, and the CP-guided plan search improves both query
+plan quality (up to 9.84x) and planning time, with a reduction of up
+to 74.4% for a single query and 9.96% across all test queries from
+trained LQOs.
+
+can you explain the above in detail?"
+i am trying to book flights to bay area from lax it can be from lax to oakland or san francisco for 3 adults round trip from Feb13 to Feb 15 2026 but the fligh should reach before 11am to SFO on Feb 13th. Can you monitor southwest airlines and give me hourly updates of flight prices. monitor it on southwest website and google also
+"There is a 3b 2b apartment which has rent 3300 and it is split like, how do we split rent in a fair manner for each bedroom based on area considering 5 people Bedroom 1; 19.31 Bedroom 2: 12.49 Bedroom 3: 12.00"
+"i have wavy, low porosity, Medium Density, Coarse Texture, Oily Scalp, Dry Climate I need good curl hair products available in the US"
+"i want to cook 1 cup brown basmati rice in rice cooker (indian type)
+how much water should i put and for how many whistles should i cook it"
+"So i had soaked sabudana on saturday afternoon and later in the evening I kept some of it in the fridge… then on monday I took it out and i rinsed it and i made the left over water come out of a strainer and again now i kept it in the fridge in the strainer keeping the top closed 
+Do you think it has gone bad?"
+"I want to share the research that I did with my NLP team regarding the difficulty aware tokens where I want to give them a brief idea about this project can you help me with it, make it understandable and easy to understand"
+"I want your help in researching about some NLP topic for my project, you can look into my syllabus. we need to build a NLP project for our course and I need your help in brainstorming the project ideas"
+For this query what will happen if we instead of using subquery we directly write the avg function inside the first select statement
+"I want to do this project, can you guide me step by step what I should do for Gemini Optimization & Scoring Engineer
+I am assigned with that task"
+"You said
+See the problem here what I see is if a user has put small queries like 'explain this', 'I did not understand this', or similar small type of queries, do you think there is a need to put it through our prompt optimizer?"
+"Why are you using 2 inputs, when a user puts input he/she will directly put it as a single prompt; they would not put the code separately and the prompt separately; so why dont you keep the input thing as one only?"
+"summarise below transcript ""Student: Chat for help with Field Experience - School of Nursingsummarise below transcript ""Student: Chat for help with Field Experience - School of Nursing
+Student: You are now chatting with . Please wait until you are connected to start the conversation.
+Student: You are now connected
+Student: good morning
+Student: I am waiting for my waitlist application to be opened. Do you know how long i have to wait?
+Advisor: Have you submitted a request for a Spring waitlist late application? you will need a new
+application to nominate the new preceptor.
+Student: I already did and i have a preceptor already
+Student: I need it opened on meditrek so i can submit my documents
+Advisor: When did you submit the waitlist late application request form? i do not see it on your account.
+Student: i submitted last week Thursday
+Advisor: okay one moment, i want to make sure it was received.
+Advisor: I am still unable to locate your request form. did you get a confirmation email when you sent
+the request?
+Student: My main concern is being locked out and spring is my last semester.
+Student: yes i got that"""
