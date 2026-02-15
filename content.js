@@ -1,5 +1,16 @@
 console.log("GreenPrompt content script loaded");
 
+// ==============================
+// STATE
+// ==============================
+
+let lastOriginalPrompt = null;
+let isOptimized = false;
+
+// ==============================
+// MESSAGE TO BACKGROUND
+// ==============================
+
 function sendOptimizeRequest(prompt) {
     return new Promise((resolve) => {
         chrome.runtime.sendMessage(
@@ -15,33 +26,60 @@ function sendOptimizeRequest(prompt) {
     });
 }
 
-function setButtonLoading(button, isLoading, originalLabel) {
+// ==============================
+// BUTTON LOADING STATE
+// ==============================
+
+function setButtonLoading(button, isLoading) {
     if (!button) return;
 
     if (isLoading) {
-        button.dataset.originalLabel = originalLabel || button.innerText;
+        button.dataset.originalLabel = button.innerText;
         button.innerText = "Optimizing...";
         button.style.opacity = "0.7";
         button.style.pointerEvents = "none";
         return;
     }
 
-    const label = button.dataset.originalLabel || originalLabel || "Optimize";
-    button.innerText = label;
+    button.innerText = button.dataset.originalLabel || "Optimize";
     button.style.opacity = "1";
     button.style.pointerEvents = "auto";
 }
+
+// ==============================
+// OPTIMIZE / REVERT LOGIC
+// ==============================
 
 async function optimizeEditorText(triggerButton) {
     const editor = document.querySelector(".ql-editor");
     if (!editor) return;
 
-    const originalText = editor.innerText.trim();
-    if (!originalText) return;
+    const currentText = editor.innerText.trim();
+    if (!currentText) return;
 
+    // ==========================
+    // REVERT MODE
+    // ==========================
+    if (isOptimized && lastOriginalPrompt) {
+        editor.innerText = lastOriginalPrompt;
+        editor.dispatchEvent(new Event("input", { bubbles: true }));
+
+        isOptimized = false;
+        lastOriginalPrompt = null;
+
+        triggerButton.innerText = "Optimize";
+        triggerButton.style.background = "#2ecc71"; // green
+
+        return;
+    }
+
+    // ==========================
+    // OPTIMIZE MODE
+    // ==========================
     setButtonLoading(triggerButton, true);
 
-    const result = await sendOptimizeRequest(originalText);
+    const result = await sendOptimizeRequest(currentText);
+
     if (result?.error) {
         setButtonLoading(triggerButton, false);
         alert(`Optimization failed: ${result.error}`);
@@ -55,61 +93,45 @@ async function optimizeEditorText(triggerButton) {
         return;
     }
 
+    // Save original before replacing
+    lastOriginalPrompt = currentText;
+
     editor.innerText = optimizedText;
     editor.dispatchEvent(new Event("input", { bubbles: true }));
 
+    // Calculate impact
     const impact = window.GreenPromptImpact.calculateImpactSummary(
-        originalText,
+        currentText,
         optimizedText,
         1000
     );
 
-    chrome.storage.local.get(["totalTokens", "totalEnergy", "totalCost"], (data) => {
-        const newTotals = {
-            totalTokens: (data.totalTokens || 0) + impact.tokensSaved,
-            totalEnergy: (data.totalEnergy || 0) + impact.energySavedWh,
-            totalCost: (data.totalCost || 0) + impact.costSavedUsd
-        };
+    // Accumulate totals
+    chrome.storage.local.get(
+        ["totalTokens", "totalEnergy", "totalCost"],
+        (data) => {
+            const newTotals = {
+                totalTokens: (data.totalTokens || 0) + impact.tokensSaved,
+                totalEnergy: (data.totalEnergy || 0) + impact.energySavedWh,
+                totalCost: (data.totalCost || 0) + impact.costSavedUsd
+            };
 
-        chrome.storage.local.set(newTotals);
-    });
+            chrome.storage.local.set(newTotals);
+        }
+    );
 
     showImpactModal(impact);
-    setButtonLoading(triggerButton, false, triggerButton?.dataset?.originalLabel);
+
+    isOptimized = true;
+
+    setButtonLoading(triggerButton, false);
+    triggerButton.innerText = "Revert";
+    triggerButton.style.background = "#e74c3c"; // red
 }
 
-function injectButton() {
-    const editor = document.querySelector('.ql-editor');
-
-    if (!editor) return;
-
-    // Prevent duplicate button
-    if (document.getElementById('greenprompt-btn')) return;
-
-    const button = document.createElement('button');
-    button.id = 'greenprompt-btn';
-    button.innerText = '🌱 Optimize';
-    button.style.marginLeft = '10px';
-    button.style.padding = '6px 10px';
-    button.style.borderRadius = '6px';
-    button.style.border = 'none';
-    button.style.cursor = 'pointer';
-    button.style.backgroundColor = '#2ecc71';
-    button.style.color = 'white';
-    button.style.fontWeight = 'bold';
-
-    button.addEventListener("click", () => {
-        optimizeEditorText(button);
-    });
-
-
-    // Append button next to editor container
-    editor.parentElement.appendChild(button);
-
-    console.log("GreenPrompt button injected");
-}
-
-
+// ==============================
+// FLOATING ASSISTANT (Grammarly-style)
+// ==============================
 
 function injectFloatingAssistant() {
     if (document.getElementById("greenprompt-assistant")) return;
@@ -124,7 +146,6 @@ function injectFloatingAssistant() {
     container.style.alignItems = "center";
     container.style.gap = "8px";
 
-    // Expandable panel
     const panel = document.createElement("div");
     panel.style.display = "flex";
     panel.style.gap = "6px";
@@ -133,7 +154,7 @@ function injectFloatingAssistant() {
     panel.style.transition = "all 0.25s ease";
     panel.style.pointerEvents = "none";
 
-    // Optimize button
+    // Optimize / Revert button
     const optimizeBtn = document.createElement("div");
     optimizeBtn.innerText = "Optimize";
     optimizeBtn.style.background = "#2ecc71";
@@ -162,7 +183,6 @@ function injectFloatingAssistant() {
     panel.appendChild(optimizeBtn);
     panel.appendChild(dashBtn);
 
-    // Circular leaf
     const leaf = document.createElement("div");
     leaf.innerText = "🌿";
     leaf.style.width = "48px";
@@ -193,12 +213,11 @@ function injectFloatingAssistant() {
     document.body.appendChild(container);
 }
 
-
-
-
+// ==============================
+// IMPACT MODAL
+// ==============================
 
 function showImpactModal(impact) {
-    // Remove existing modal if any
     const existing = document.getElementById("greenprompt-modal");
     if (existing) existing.remove();
 
@@ -222,23 +241,19 @@ function showImpactModal(impact) {
         <h3 style="margin-top:0;">🌱 Prompt Optimization</h3>
         <p><strong>Original Tokens:</strong> ${impact.originalTokens}</p>
         <p><strong>Optimized Tokens:</strong> ${impact.optimizedTokens}</p>
-        <p><strong>Reduction:</strong> ${impact.reductionPct}%</p>
+        <p><strong>Reduction:</strong> ${impact.reductionPct.toFixed(2)}%</p>
         <hr style="border-color:#444;" />
-        <p><strong>Energy Saved:</strong> ${impact.energySavedWh} Wh</p>
-        <p><strong>Cost Saved:</strong> $${impact.costSavedUsd}</p>
-        <p style="font-size:12px; opacity:0.8;">
-        If used ${impact.scaled.runs} times:
-        ${impact.scaled.tokensSaved} tokens saved
-        </p>
+        <p><strong>Energy Saved:</strong> ${impact.energySavedWh.toFixed(4)} Wh</p>
+        <p><strong>Cost Saved:</strong> $${impact.costSavedUsd.toFixed(6)}</p>
         <button id="greenprompt-close" style="
-        margin-top:10px;
-        padding:6px 10px;
-        border:none;
-        border-radius:6px;
-        cursor:pointer;
-        background:#2ecc71;
-        color:white;
-        font-weight:bold;
+            margin-top:10px;
+            padding:6px 10px;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+            background:#2ecc71;
+            color:white;
+            font-weight:bold;
         ">Close</button>
     `;
 
@@ -249,5 +264,8 @@ function showImpactModal(impact) {
     };
 }
 
-injectFloatingAssistant();
+// ==============================
+// INIT
+// ==============================
 
+injectFloatingAssistant();
