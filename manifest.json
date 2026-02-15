@@ -9,7 +9,7 @@
         "https://generativelanguage.googleapis.com/*"
     ],
     "background": {
-        "service_worker": "background.js"
+        "service_worker": "bg1.js"
     },
     "content_scripts": [
     {
