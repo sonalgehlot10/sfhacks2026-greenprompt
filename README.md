@@ -1,5 +1,3 @@
-
-
 🌱 GreenPrompt
 GreenPrompt is a Chrome extension that optimizes user prompts in real time to reduce token usage, energy consumption, and API cost when interacting with Large Language Models (LLMs).
 The extension integrates directly into Gemini, enabling one-click prompt refinement and transparent tracking of sustainability impact through a dedicated dashboard.
@@ -24,18 +22,24 @@ GreenPrompt introduces a real-time optimization layer that:
 The system provides immediate feedback and long-term tracking through a sustainability dashboard.
 
 🚀 Key Features
+
 One-Click Prompt Optimization
+
 * Injected directly into Gemini via Chrome Extension (Manifest V3)
 * Rewrites user prompts to improve clarity and reduce verbosity
 * Supports revert-to-original functionality
+
 Impact Calculation Engine
 For each optimization, GreenPrompt computes:
+
 * Tokens saved
 * Energy saved (Wh)
 * Estimated API cost saved
+
 Impact is accumulated using chrome.storage.local.
 Sustainability Dashboard
 The dashboard includes:
+
 * Total Tokens Saved
 * Total Energy Saved (Wh)
 * Total Cost Saved
@@ -49,10 +53,13 @@ The dashboard includes:
 🧠 How It Works
 Token Estimation
 Token reduction is calculated by comparing the original and optimized prompt lengths.
+
 Energy Estimation
 Energy usage is estimated based on token count and an assumed energy-per-token constant. Savings are converted to watt-hours (Wh).
+
 Cost Estimation
 Cost savings are derived using a per-token API pricing approximation.
+
 Real-World Translation
 Energy savings are mapped to tangible equivalents, such as:
 * LED lighting duration
