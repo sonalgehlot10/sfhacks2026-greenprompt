@@ -3,7 +3,7 @@ GreenPrompt is a Chrome extension that optimizes user prompts in real time to re
 The extension integrates directly into Gemini, enabling one-click prompt refinement and transparent tracking of sustainability impact through a dedicated dashboard.
 
 🎥 Demo
-Watch GreenPrompt in action: 👉 https://youtu.be/laMa_EsvABE?si=B6usvMQF5xknjFVY
+[![Watch the demo](https://img.youtube.com/vi/laMa_EsvABE/0.jpg)](https://youtu.be/laMa_EsvABE?si=B6usvMQF5xknjFVY)
 
 📌 Problem
 Large Language Models are widely used for productivity and automation, but prompts are often verbose or inefficient. At scale, unnecessary tokens translate to:
