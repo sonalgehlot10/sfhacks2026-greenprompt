@@ -30,6 +30,7 @@ One-Click Prompt Optimization
 * Supports revert-to-original functionality
 
 Impact Calculation Engine
+
 For each optimization, GreenPrompt computes:
 
 * Tokens saved
@@ -37,7 +38,9 @@ For each optimization, GreenPrompt computes:
 * Estimated API cost saved
 
 Impact is accumulated using chrome.storage.local.
+
 Sustainability Dashboard
+
 The dashboard includes:
 
 * Total Tokens Saved
